@@ -1,13 +1,7 @@
-
-import { Button } from './components/ui/button'
+import { Button } from "./components/ui/button";
 
 function App() {
-
-  return (
-
-      <Button>Default</Button>
-      
-  )
+  return <Button>Default</Button>;
 }
 
-export default App
+export default App;
