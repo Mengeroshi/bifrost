@@ -1,15 +1,20 @@
-import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import App from "./App.tsx";
 import { BrowserRouter, Route, Routes } from "react-router";
+import { Navbar } from "./components/Navbar.tsx";
+import { Wrappers } from "./Wrappers.tsx";
+import { App } from "./App.tsx";
+import { Login } from "./pages/Login.tsx";
 
 createRoot(document.getElementById("root")!).render(
-  <StrictMode>
+  <Wrappers>
     <BrowserRouter>
       <Routes>
-        <Route index path="/" element={<App />} />
+        <Route element={<Navbar />}>
+          <Route index element={<App />} />
+          <Route path="login" element={<Login />} />
+        </Route>
       </Routes>
     </BrowserRouter>
-  </StrictMode>
+  </Wrappers>
 );
