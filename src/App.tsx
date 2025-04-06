@@ -1,7 +1,5 @@
 import { Button } from "./components/ui/button";
 
-function App() {
+export function App() {
   return <Button>Default</Button>;
 }
-
-export default App;

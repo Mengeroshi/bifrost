@@ -5,6 +5,7 @@ import { Navbar } from "./components/Navbar.tsx";
 import { Wrappers } from "./Wrappers.tsx";
 import { App } from "./App.tsx";
 import { Login } from "./pages/Login.tsx";
+import { Performance } from "./pages/Performance.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <Wrappers>
@@ -13,6 +14,7 @@ createRoot(document.getElementById("root")!).render(
         <Route element={<Navbar />}>
           <Route index element={<App />} />
           <Route path="login" element={<Login />} />
+          <Route path="performance" element={<Performance />} />
         </Route>
       </Routes>
     </BrowserRouter>
