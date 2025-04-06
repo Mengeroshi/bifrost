@@ -28,13 +28,7 @@ export const Navbar = () => {
   const { data: avatar } = useEnsAvatar({
     name: normalize(ensName || ""),
   });
-  if (status === "pending") return <div>Loading ENS name</div>;
-  if (status === "error")
-    return (
-      <div>
-        <div>Error fetching ENS name: {error.message}</div>
-      </div>
-    );
+
   return (
     <div>
       <nav className="flex items-center justify-between py-2 px-4 border-4 border-border bg-bw fixed top-0 w-full">
