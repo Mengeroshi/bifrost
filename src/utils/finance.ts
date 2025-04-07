@@ -15,8 +15,5 @@ export const performanceData = ({
 };
 
 export const priceFormat = (rawPrice: number) => {
-  return rawPrice.toLocaleString("en-US", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  });
+  return rawPrice.toLocaleString("en-US", {});
 };
