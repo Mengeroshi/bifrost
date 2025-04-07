@@ -14,7 +14,7 @@ createRoot(document.getElementById("root")!).render(
         <Route element={<Navbar />}>
           <Route index element={<App />} />
           <Route path="login" element={<Login />} />
-          <Route path="performance" element={<Performance />} />
+          <Route path="performance/:baseCrypto" element={<Performance />} />
         </Route>
       </Routes>
     </BrowserRouter>
