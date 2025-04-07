@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useAccount, useConnect } from "wagmi";
 import metmaskIcon from "../assets/metamask.png";
-import { Navbar } from "@/components/Navbar";
 
 export function Login() {
   const navigate = useNavigate();
@@ -21,9 +20,11 @@ export function Login() {
   const metamaskConector = connectors[0];
 
   return (
-    <div>
-      <Navbar />
+    <div className="flex flex-col items-center justify-center min-h-[calc(100vh-100px)]">
+      <h1 className="text-4xl text-center mb-4">Login to Start</h1>
+
       <Button
+        size="lg"
         key={metamaskConector.uid}
         onClick={() => connect({ connector: metamaskConector })}
       >
