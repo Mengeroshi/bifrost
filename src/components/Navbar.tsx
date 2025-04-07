@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Outlet, useNavigate } from "react-router";
+import { Link, Outlet, useNavigate } from "react-router";
 import { useAccount, useDisconnect, useEnsAvatar, useEnsName } from "wagmi";
 import { Badge } from "./ui/badge";
 import { normalize } from "viem/ens";
@@ -24,7 +24,7 @@ export const Navbar = () => {
     }
   }, [isConnected]);
 
-  const { data: ensName, error, status } = useEnsName({ address });
+  const { data: ensName } = useEnsName({ address });
   const { data: avatar } = useEnsAvatar({
     name: normalize(ensName || ""),
   });
@@ -32,7 +32,9 @@ export const Navbar = () => {
   return (
     <div>
       <nav className="flex items-center justify-between py-2 px-4 border-4 border-border bg-bw fixed top-0 w-full">
-        <div className="text-5xl">Bifrost</div>
+        <Link to="/">
+          <h1 className="text-5xl">Bifrost</h1>
+        </Link>
 
         {isConnected && (
           <div className="flex items-center gap-2">
