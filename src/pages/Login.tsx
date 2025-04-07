@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button";
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useAccount, useConnect } from "wagmi";
-import metmaskIcon from "../assets/metamask.png";
 
 export function Login() {
   const navigate = useNavigate();
@@ -28,7 +27,7 @@ export function Login() {
         key={metamaskConector.uid}
         onClick={() => connect({ connector: metamaskConector })}
       >
-        <img src={metmaskIcon} className="size-4" /> Login with{" "}
+        <img src="/assets/metamask.png" className="size-4" /> Login with{" "}
         {metamaskConector.name}
       </Button>
     </div>

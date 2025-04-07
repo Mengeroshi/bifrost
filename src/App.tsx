@@ -13,7 +13,11 @@ export function App() {
         {CRYPTOS_TO_TRACK.map((crypto) => (
           <Link to={`/performance/${crypto.symbol}`} key={crypto.symbol}>
             <Button size="lg">
-              <img src={crypto.img} alt={crypto.name} className="size-4" />
+              <img
+                src={`/assets/${crypto.symbol}.png`}
+                alt={crypto.name}
+                className="size-4"
+              />
               {crypto.name}
             </Button>
           </Link>
