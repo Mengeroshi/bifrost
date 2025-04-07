@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { VersusSelect } from "@/components/VersusSelect";
-import { mock } from "@/mock";
+import { useFetchCryptoData } from "@/hooks/useFetchCryptoData";
 import { RootState } from "@/redux/store";
 import { TCleanedHistoricDataItem } from "@/types";
 import { formatDate } from "@/utils/date";
@@ -19,7 +19,7 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useParams, useSearchParams } from "react-router";
 
 ChartJS.register(
@@ -31,8 +31,6 @@ ChartJS.register(
   Tooltip,
   Legend
 );
-
-// const newMock = cleanRawHistoricalDataItems(mock);
 
 export const options = {
   responsive: true,
@@ -76,7 +74,8 @@ export const options = {
 const getDataset = (
   cleanedHistoricalItems: TCleanedHistoricDataItem[],
   symbol: string,
-  color: string
+  color: string,
+  timeSpane?: "week" | "month" | "year"
 ) => {
   if (!cleanedHistoricalItems) {
     return {
@@ -86,13 +85,19 @@ const getDataset = (
       backgroundColor: color,
     };
   }
-  const data = getPerfomanceDataFromCleanHistoricalItems(
-    cleanedHistoricalItems
-  ).map(({ price, time, percentChange }) => ({
-    x: formatDate(time),
-    y: percentChange,
-    price,
-  }));
+  const lel =
+    timeSpane === "month"
+      ? cleanedHistoricalItems.slice(-30)
+      : timeSpane === "week"
+        ? cleanedHistoricalItems.slice(-7)
+        : cleanedHistoricalItems;
+  const data = getPerfomanceDataFromCleanHistoricalItems(lel).map(
+    ({ price, time, percentChange }) => ({
+      x: formatDate(time),
+      y: percentChange,
+      price,
+    })
+  );
 
   return {
     label: symbol,
@@ -113,9 +118,10 @@ export const Performance = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const date = searchParams.get("date") || "year";
   const vs = searchParams.get("vs") || undefined;
-  const dispatch = useDispatch();
   const cryptoPrices = useSelector((state: RootState) => state.cryptoPrices);
   const baseHistoricDataItems = cryptoPrices[baseCrypto as string];
+
+  useFetchCryptoData();
 
   return (
     <div className="flex flex-col flex-items-center justify-center">
@@ -150,23 +156,26 @@ export const Performance = () => {
         options={options}
         data={{
           datasets: [
-            getDataset(baseHistoricDataItems, baseCrypto as string, "#FD9745"),
+            getDataset(
+              baseHistoricDataItems,
+              baseCrypto as string,
+              " #a388ee",
+              date as "week" | "month" | "year"
+            ),
 
-            ...(vs ? [getDataset(cryptoPrices[vs], vs, "#3B82F6")] : []),
+            ...(vs
+              ? [
+                  getDataset(
+                    cryptoPrices[vs],
+                    vs,
+                    "#FD9745",
+                    date as "week" | "month" | "year"
+                  ),
+                ]
+              : []),
           ],
         }}
       />
-      <Button
-        onClick={() => {
-          // dispatch({
-          //   type: "cryptoPrices/setCryptoPrices",
-          //   payload: { cryptoTicker: "BTC", newHistoricDataItems: newMock },
-          // });
-          dispatch({ type: "cryptoPrices/clearCryptoPrices" });
-        }}
-      >
-        Clear Prices
-      </Button>
     </div>
   );
 };
